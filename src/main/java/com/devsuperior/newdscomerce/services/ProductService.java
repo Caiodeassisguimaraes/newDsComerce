@@ -4,8 +4,12 @@ import com.devsuperior.newdscomerce.dto.ProductDto;
 import com.devsuperior.newdscomerce.entities.Product;
 import com.devsuperior.newdscomerce.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 public class ProductService {
@@ -21,6 +25,12 @@ public class ProductService {
         Product product = repositoty.findById(id).get();
         return new ProductDto(product);
 
+    }
+
+    @Transactional(readOnly = true)
+    public Page<ProductDto> findAll(Pageable pageable){
+        Page<Product> result = repositoty.findAll(pageable);
+        return result.map(registry -> new ProductDto(registry));
     }
 
 }
