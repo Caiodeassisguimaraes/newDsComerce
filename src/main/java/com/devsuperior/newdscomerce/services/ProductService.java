@@ -33,4 +33,15 @@ public class ProductService {
         return result.map(registry -> new ProductDto(registry));
     }
 
+    @Transactional
+    public ProductDto insert(ProductDto dto){
+        Product entity = new Product();
+        entity.setName(dto.getName());
+        entity.setDescription(dto.getDescription());
+        entity.setPrice(dto.getPrice());
+        entity.setImgUrl(dto.getImgUrl());
+        entity = repositoty.save(entity);
+        return new ProductDto(entity);
+    }
+
 }
