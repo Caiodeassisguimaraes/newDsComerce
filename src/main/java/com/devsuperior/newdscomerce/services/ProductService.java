@@ -9,8 +9,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
 @Service
 public class ProductService {
     @Autowired
@@ -36,12 +34,23 @@ public class ProductService {
     @Transactional
     public ProductDto insert(ProductDto dto){
         Product entity = new Product();
+        copyDtoToEntity(dto, entity);
+        entity = repositoty.save(entity);
+        return new ProductDto(entity);
+    }
+
+    @Transactional
+    public ProductDto update(Long id, ProductDto dto){
+        Product entity = repositoty.getReferenceById(id);
+        copyDtoToEntity(dto, entity);
+        return new ProductDto(entity);
+    }
+
+    private void copyDtoToEntity(ProductDto dto, Product entity) {
         entity.setName(dto.getName());
         entity.setDescription(dto.getDescription());
         entity.setPrice(dto.getPrice());
         entity.setImgUrl(dto.getImgUrl());
-        entity = repositoty.save(entity);
-        return new ProductDto(entity);
     }
 
 }
