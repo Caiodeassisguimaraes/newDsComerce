@@ -3,6 +3,7 @@ package com.devsuperior.newdscomerce.services;
 import com.devsuperior.newdscomerce.dto.ProductDto;
 import com.devsuperior.newdscomerce.entities.Product;
 import com.devsuperior.newdscomerce.repositories.ProductRepository;
+import com.devsuperior.newdscomerce.services.exceptions.ResourseNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,12 +16,18 @@ public class ProductService {
     private ProductRepository repositoty;
     @Transactional(readOnly = true)
     public ProductDto findById(Long id){
+
+        // Código com Exceções não tratadas
         /*Optional <Product> result = repositoty.findById(id);
         Product product = result.get();
         ProductDto dto = new ProductDto(product);
         return dto;*/
 
-        Product product = repositoty.findById(id).get();
+        //Codigo abreviado com Exceções não tratadas
+        /*Product product = repositoty.findById(id).get();
+        return new ProductDto(product);*/
+
+        Product product = repositoty.findById(id).orElseThrow(() -> new ResourseNotFoundException("Recurso não encontrado"));
         return new ProductDto(product);
 
     }
