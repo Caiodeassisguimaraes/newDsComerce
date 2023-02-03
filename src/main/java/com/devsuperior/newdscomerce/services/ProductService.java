@@ -3,11 +3,16 @@ package com.devsuperior.newdscomerce.services;
 import com.devsuperior.newdscomerce.dto.ProductDto;
 import com.devsuperior.newdscomerce.entities.Product;
 import com.devsuperior.newdscomerce.repositories.ProductRepository;
+import com.devsuperior.newdscomerce.services.exceptions.DatabaseException;
 import com.devsuperior.newdscomerce.services.exceptions.ResourseNotFoundException;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
@@ -48,13 +53,27 @@ public class ProductService {
 
     @Transactional
     public ProductDto update(Long id, ProductDto dto){
-        Product entity = repositoty.getReferenceById(id);
-        copyDtoToEntity(dto, entity);
-        return new ProductDto(entity);
+        try{
+            Product entity = repositoty.getReferenceById(id);
+            copyDtoToEntity(dto, entity);
+            return new ProductDto(entity);
+        }
+        catch (EntityNotFoundException e){
+            throw new ResourseNotFoundException("Recurso não encontrado");
+        }
+
     }
-    @Transactional
+    @Transactional(propagation = Propagation.SUPPORTS)
     public void delete(Long id){
-        repositoty.deleteById(id);
+        try {
+          repositoty.deleteById(id);
+        }
+        catch (EmptyResultDataAccessException e){
+            throw new ResourseNotFoundException("Recurso não encontrado");
+        }
+        catch(DataIntegrityViolationException e){
+            throw new DatabaseException("Violação de Integridade Referencial");
+        }
     }
 
     private void copyDtoToEntity(ProductDto dto, Product entity) {

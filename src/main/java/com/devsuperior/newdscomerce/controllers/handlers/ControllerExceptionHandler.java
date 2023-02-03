@@ -1,6 +1,7 @@
 package com.devsuperior.newdscomerce.controllers.handlers;
 
 import com.devsuperior.newdscomerce.dto.CustomError;
+import com.devsuperior.newdscomerce.services.exceptions.DatabaseException;
 import com.devsuperior.newdscomerce.services.exceptions.ResourseNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,13 @@ public class ControllerExceptionHandler {
     @ExceptionHandler(ResourseNotFoundException.class)
     public ResponseEntity<CustomError> resourseNotFound(ResourseNotFoundException e, HttpServletRequest request) {
         HttpStatus status = HttpStatus.NOT_FOUND;
+        CustomError err = new CustomError(Instant.now(), status.value(),e.getMessage(), request.getRequestURI());
+        return ResponseEntity.status(status).body(err);
+    }
+
+    @ExceptionHandler(DatabaseException.class)
+    public ResponseEntity<CustomError> database(DatabaseException e, HttpServletRequest request) {
+        HttpStatus status = HttpStatus.BAD_REQUEST;
         CustomError err = new CustomError(Instant.now(), status.value(),e.getMessage(), request.getRequestURI());
         return ResponseEntity.status(status).body(err);
     }
