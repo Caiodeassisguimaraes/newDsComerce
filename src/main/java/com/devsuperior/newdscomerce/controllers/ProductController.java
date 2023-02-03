@@ -2,6 +2,7 @@ package com.devsuperior.newdscomerce.controllers;
 
 import com.devsuperior.newdscomerce.dto.ProductDto;
 import com.devsuperior.newdscomerce.services.ProductService;
+import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -36,14 +37,14 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<ProductDto> insert(@RequestBody ProductDto dto){
+    public ResponseEntity<ProductDto> insert(@Valid @RequestBody ProductDto dto){
         dto = service.insert(dto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}").buildAndExpand(dto.getId()).toUri();
         return ResponseEntity.created(uri).body(dto);
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<ProductDto> update(@PathVariable Long id, @RequestBody ProductDto dto){
+    public ResponseEntity<ProductDto> update(@PathVariable Long id, @Valid @RequestBody ProductDto dto){
         dto = service.update(id, dto);
         return ResponseEntity.ok(dto);
     }
