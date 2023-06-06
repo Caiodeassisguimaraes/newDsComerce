@@ -4,7 +4,7 @@ import com.devsuperior.newdscomerce.dto.CustomError;
 import com.devsuperior.newdscomerce.dto.ValidationError;
 import com.devsuperior.newdscomerce.services.exceptions.DatabaseException;
 import com.devsuperior.newdscomerce.services.exceptions.ResourseNotFoundException;
-import jakarta.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;

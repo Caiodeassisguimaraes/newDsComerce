@@ -2,7 +2,7 @@ package com.devsuperior.newdscomerce.controllers;
 
 import com.devsuperior.newdscomerce.dto.ProductDto;
 import com.devsuperior.newdscomerce.services.ProductService;
-import jakarta.validation.Valid;
+import javax.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -30,9 +30,9 @@ public class ProductController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<ProductDto>> findAll(Pageable pageable){
+    public ResponseEntity<Page<ProductDto>> findAll(@RequestParam(name = "name", defaultValue = "") String name, Pageable pageable){
         /*return service.findAll(pageable);*/
-        Page<ProductDto> dto = service.findAll(pageable);
+        Page<ProductDto> dto = service.findAll(name, pageable);
         return ResponseEntity.ok(dto);
     }
 

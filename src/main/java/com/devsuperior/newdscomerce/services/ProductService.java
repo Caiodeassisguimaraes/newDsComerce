@@ -5,7 +5,7 @@ import com.devsuperior.newdscomerce.entities.Product;
 import com.devsuperior.newdscomerce.repositories.ProductRepository;
 import com.devsuperior.newdscomerce.services.exceptions.DatabaseException;
 import com.devsuperior.newdscomerce.services.exceptions.ResourseNotFoundException;
-import jakarta.persistence.EntityNotFoundException;
+import javax.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -38,8 +38,8 @@ public class ProductService {
     }
 
     @Transactional(readOnly = true)
-    public Page<ProductDto> findAll(Pageable pageable){
-        Page<Product> result = repositoty.findAll(pageable);
+    public Page<ProductDto> findAll(String name, Pageable pageable){
+        Page<Product> result = repositoty.searchByName(name, pageable);
         return result.map(registry -> new ProductDto(registry));
     }
 
