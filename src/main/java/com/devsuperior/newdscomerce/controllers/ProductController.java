@@ -1,8 +1,8 @@
 package com.devsuperior.newdscomerce.controllers;
 
 import com.devsuperior.newdscomerce.dto.ProductDto;
+import com.devsuperior.newdscomerce.dto.ProductMinDto;
 import com.devsuperior.newdscomerce.services.ProductService;
-import javax.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -12,6 +12,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 
 @RestController
@@ -31,9 +32,9 @@ public class ProductController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<ProductDto>> findAll(@RequestParam(name = "name", defaultValue = "") String name, Pageable pageable){
+    public ResponseEntity<Page<ProductMinDto>> findAll(@RequestParam(name = "name", defaultValue = "") String name, Pageable pageable){
         /*return service.findAll(pageable);*/
-        Page<ProductDto> dto = service.findAll(name, pageable);
+        Page<ProductMinDto> dto = service.findAll(name, pageable);
         return ResponseEntity.ok(dto);
     }
 
