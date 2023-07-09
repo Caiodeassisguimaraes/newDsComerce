@@ -1,7 +1,9 @@
 package com.devsuperior.newdscomerce.services;
 
+import com.devsuperior.newdscomerce.dto.CategoryDto;
 import com.devsuperior.newdscomerce.dto.ProductDto;
 import com.devsuperior.newdscomerce.dto.ProductMinDto;
+import com.devsuperior.newdscomerce.entities.Category;
 import com.devsuperior.newdscomerce.entities.Product;
 import com.devsuperior.newdscomerce.repositories.ProductRepository;
 import com.devsuperior.newdscomerce.services.exceptions.DatabaseException;
@@ -83,6 +85,12 @@ public class ProductService {
         entity.setDescription(dto.getDescription());
         entity.setPrice(dto.getPrice());
         entity.setImgUrl(dto.getImgUrl());
+        entity.getCategories().clear();
+        for (CategoryDto catDto : dto.getCategories()){
+            Category cat = new Category();
+            cat.setId(catDto.getId());
+            entity.getCategories().add(cat);
+        }
     }
 
 }

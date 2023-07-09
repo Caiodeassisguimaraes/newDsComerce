@@ -1,7 +1,6 @@
 package com.devsuperior.newdscomerce.entities;
 
 import javax.persistence.*;
-
 import java.util.HashSet;
 import java.util.Set;
 
