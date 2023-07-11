@@ -4,6 +4,7 @@ import com.devsuperior.newdscomerce.entities.Order;
 import com.devsuperior.newdscomerce.entities.OrderItem;
 import com.devsuperior.newdscomerce.entities.OrderStatus;
 
+import javax.validation.constraints.NotEmpty;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +16,7 @@ public class OrderDto {
     private OrderStatus status;
     private ClientDto client;
     private PaymentDto payment;
+    @NotEmpty(message = "Deve ter pelo menos um item")
     private List<OrderItemDto> items = new ArrayList<>();
 
 
