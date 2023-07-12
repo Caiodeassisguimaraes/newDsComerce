@@ -27,9 +27,14 @@ public class OrderService {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private AuthService authService;
+
     @Transactional(readOnly = true)
     public OrderDto findById(Long id){
         Order order = repositoty.findById(id).orElseThrow(() -> new ResourseNotFoundException("Recurso não encontrado"));
+        authService.validateSelfOrAdmin(order.getClient().getId());
         return new OrderDto(order);
 
     }

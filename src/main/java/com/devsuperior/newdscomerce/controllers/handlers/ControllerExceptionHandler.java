@@ -3,6 +3,7 @@ package com.devsuperior.newdscomerce.controllers.handlers;
 import com.devsuperior.newdscomerce.dto.CustomError;
 import com.devsuperior.newdscomerce.dto.ValidationError;
 import com.devsuperior.newdscomerce.services.exceptions.DatabaseException;
+import com.devsuperior.newdscomerce.services.exceptions.ForbiddenException;
 import com.devsuperior.newdscomerce.services.exceptions.ResourseNotFoundException;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
@@ -39,5 +40,10 @@ public class ControllerExceptionHandler {
         }
         return ResponseEntity.status(status).body(err);
     }
-
+    @ExceptionHandler(ForbiddenException.class)
+    public ResponseEntity<CustomError> forbidden(ForbiddenException e, HttpServletRequest request) {
+        HttpStatus status = HttpStatus.FORBIDDEN;
+        CustomError err = new CustomError(Instant.now(), status.value(),e.getMessage(), request.getRequestURI());
+        return ResponseEntity.status(status).body(err);
+    }
 }
