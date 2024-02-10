@@ -1,7 +1,7 @@
 import './styles.css'
 import cartIcon from '../../assets/cart.svg';
 
-export default function headerClient() {
+export default function HeaderClient() {
     return (<header className="dsc-header-client">
         <nav className="dsc-container">
             <h1>DSCommerce</h1>
