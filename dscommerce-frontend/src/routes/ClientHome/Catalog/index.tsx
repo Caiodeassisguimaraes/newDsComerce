@@ -4,23 +4,41 @@ import CatalogCard from '../../../components/CatalogCard';
 import ButtonNextPage from '../../../components/ButtonNextPage';
 import * as productService from '../../../services/product-service';
 import { useEffect, useState } from 'react';
+import { ProductDTO } from '../../../models/product';
+
+type QuerryParams = {
+    page: number,
+    name: string,
+}
 
 export default function Catalog() {
 
+    const [isLastPage, setIsLastPage] = useState(false);
+
     const [products, setProducts] = useState<ProductDTO[]>([]);
 
-    const [productName, setProductName] = useState("");
+    const [querryParams, setQuerryParams] = useState({
+        page: 0,
+        name: "",
+    });
 
     useEffect(() => {
         productService
-            .findPageRequest(0, productName)
-            .then(
-                response => { setProducts(response.data.content) }
-            );
-    }, [productName]);
+            .findPageRequest(querryParams.page, querryParams.name)
+            .then(response => {
+                const nextPage = response.data.content;
+                setProducts(products.concat(nextPage));
+                setIsLastPage(response.data.last);
+            });
+    }, [querryParams]);
 
     function handleSearch(searchText: string) {
-        setProductName(searchText);
+        setProducts([]);
+        setQuerryParams({ ...querryParams, page: 0, name: searchText });
+    }
+
+    function handleNextPageClick() {
+        setQuerryParams({ ...querryParams, page: querryParams.page + 1 });
     }
 
     return (
@@ -33,7 +51,12 @@ export default function Catalog() {
                         products.map(product => <CatalogCard key={product.id} product={product} />)
                     }
                 </div>
-                <ButtonNextPage />
+                {
+                    !isLastPage &&
+                    <div onClick={handleNextPageClick}>
+                        <ButtonNextPage />
+                    </div>
+                }
             </section>
         </main>
 
