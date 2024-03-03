@@ -17,21 +17,21 @@ export function loginRequest(loginData: CredentialsDTO) {
         method: "POST",
         url: "/oauth/token",
         data: requestBody,
-        //headers : headers
-        headers
+        headers : headers
+        //headers
     }
 
     return requestBckend(config);
 }
 
 export function logout() {
-    accessTokenRepository.remove;
+    accessTokenRepository.remove();
 }
 
 export function saveAccessToken(token: string) {
-    accessTokenRepository.save;
+    accessTokenRepository.save(token);
 }
 
 export function getAccessToken(){
-    accessTokenRepository.get;
+    return accessTokenRepository.get();
 }
