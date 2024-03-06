@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import * as orderService from '../../../services/order-service';
 import { Link } from "react-router-dom";
 
-export default function COnfirmation() {
+export default function Confirmation() {
 
     const params = useParams();
 

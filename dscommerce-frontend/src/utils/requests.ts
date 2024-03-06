@@ -4,7 +4,7 @@ import { history } from "./history";
 import * as authService from '../services/auth-service';
 
 
-export function requestBckend(config: AxiosRequestConfig) {
+export function requestBackend(config: AxiosRequestConfig) {
 
     const headers = config.withCredentials
         ? {

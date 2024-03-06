@@ -1,5 +1,5 @@
 import { AxiosRequestConfig } from "axios";
-import { requestBckend } from "../utils/requests";
+import { requestBackend } from "../utils/requests";
 
 export function findMe() {
 
@@ -8,5 +8,5 @@ export function findMe() {
         withCredentials: true,
     }
 
-    return requestBckend(config)
+    return requestBackend(config)
 }

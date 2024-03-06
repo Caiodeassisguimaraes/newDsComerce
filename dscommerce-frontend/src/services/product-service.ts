@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig } from "axios";
 import { BASE_URL } from "../utils/system";
-import { requestBckend } from "../utils/requests";
+import { requestBackend } from "../utils/requests";
 
 export function findPageRequest(page: number, name: string, size = 12, sort = "name"){
 
@@ -15,10 +15,10 @@ export function findPageRequest(page: number, name: string, size = 12, sort = "n
         }
     }
 
-    return requestBckend(config);
+    return requestBackend(config);
 }
 
 export function findById(id: number){
-    return requestBckend ({url: `/products/${id}` })
+    return requestBackend ({url: `/products/${id}` })
 }
 
