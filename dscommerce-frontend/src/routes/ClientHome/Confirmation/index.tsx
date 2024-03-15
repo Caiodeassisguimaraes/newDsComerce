@@ -1,14 +1,12 @@
 import './styles.css';
 import { useEffect, useState } from "react";
-import { OrderDTO } from "../../../models/order";
-import { useParams } from "react-router-dom";
-import * as orderService from '../../../services/order-service';
 import { Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import { OrderDTO } from "../../../models/order";
+import * as orderService from '../../../services/order-service';
 
 export default function Confirmation() {
-
     const params = useParams();
-
     const [order, setOrder] = useState<OrderDTO>();
 
     useEffect(() => {
@@ -16,8 +14,7 @@ export default function Confirmation() {
             .then(response => {
                 setOrder(response.data);
             })
-    }, [])
-
+    }, []);
     return (
         <main>
             <section id="confirmation-section" className="dsc-container">
@@ -35,9 +32,10 @@ export default function Confirmation() {
                                     </div>
                                 </div>
                                 <div className="dsc-cart-item-right">
-                                    R$ {item.subTotal.toFixed(2)}
+                                    R$ {item.price.toFixed(2)}
                                 </div>
-                            </div>))
+                            </div>
+                        ))
                     }
                     <div className="dsc-cart-total-container">
                         <h3>R$ {order?.total.toFixed(2)}</h3>
@@ -52,7 +50,6 @@ export default function Confirmation() {
                             Início
                         </div>
                     </Link>
-
                 </div>
             </section>
         </main>

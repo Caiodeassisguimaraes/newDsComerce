@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import './styles.css'
+import './styles.css';
 
 type Props = {
-    onSearch: Function;
+    onSearch: Function
 }
 
 export default function SearchBar({ onSearch }: Props) {
@@ -13,19 +13,19 @@ export default function SearchBar({ onSearch }: Props) {
         setText(event.target.value);
     }
 
+
+    function handleSubmit(event: any) {
+        event.preventDefault();
+        onSearch(text)
+    }
+
     function handleResetClick() {
         setText("");
         onSearch(text);
     }
 
-    function handleSubmit(event: any) {
-        event.preventDefault();
-        onSearch(text);
-    }
-
     return (
         <form className="dsc-search-bar" onSubmit={handleSubmit}>
-
             <button type="submit">🔎︎</button>
             <input
                 value={text}
@@ -33,7 +33,7 @@ export default function SearchBar({ onSearch }: Props) {
                 placeholder="Nome do produto"
                 onChange={handleChange}
             />
-            <button onClick={handleResetClick}>🗙</button>
+            <button onClick={handleResetClick}>❌</button>
         </form>
-    )
+    );
 }

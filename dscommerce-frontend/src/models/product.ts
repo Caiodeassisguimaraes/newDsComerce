@@ -1,7 +1,6 @@
-import { CategoryDTO } from "./category";
-
+import { CategoryDTO } from './category';
 export type ProductDTO = {
-    id:number;
+    id: number;
     name: string;
     description: string;
     price: number;

@@ -1,13 +1,14 @@
-import { TOKEN_KEY } from "../utils/system";
+import { TOKEN_KEY } from './../utils/system';
 
-export function save(token: string){
+
+export function save(token: string) {
     localStorage.setItem(TOKEN_KEY, token);
 }
 
-export function get(): string | null{
+export function get(): string | null {
     return localStorage.getItem(TOKEN_KEY);
 }
 
-export function remove(){
+export function remove() {
     localStorage.removeItem(TOKEN_KEY);
 }
